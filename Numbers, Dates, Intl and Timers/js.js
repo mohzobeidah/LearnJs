@@ -92,3 +92,35 @@ const option3 = {
 }
 console.log(new Intl.NumberFormat("ar-SY", option3).format(1))
 
+const timer = document.querySelector('.timer');
+const reset = document.querySelector('.reset');
+const start = document.querySelector('.start');
+let ticker
+const  timerfunction = function()
+{
+   const tick  = function(){
+    
+    let min =  String(Math.trunc(time /60)).padStart(2,0);
+    let sec = String( time % 60).padStart(2,0);
+    timer.innerHTML=`${min}:${sec}`;
+    console.log(`${min}:${sec}`)
+    if(sec==0 && min==0)
+    clearInterval(ticker);
+    
+    time --;
+   }
+    let time = 100;
+   ticker=  setInterval(tick, 1000 );
+
+   
+}
+reset.addEventListener("click", function(){
+    clearInterval(ticker);
+})
+
+start.addEventListener("click", function(){
+    clearInterval(ticker);
+    timerfunction();
+})
+
+timerfunction();
