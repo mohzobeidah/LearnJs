@@ -56,4 +56,34 @@ test.then(e=>console.log(e))
 // shoppingCart2.addToCart('ball', 50);
 
 
-import { cloneDeep } from "./node_modules/lodash-es/cloneDeep.js";
+//import  cloneDeep  from "./node_modules/lodash-es/cloneDeep.js";//without pacel labitry
+import  cloneDeep  from "lodash-es";//with  pacel labitry
+
+
+const state = {
+  cart:
+  [{
+    product:"bread", quentity:5
+  },{
+    product:"apple", quentity:3
+  }],
+  user:{
+    login:false
+  }
+}
+
+const state2 = Object.assign({}, state)
+console.log(state2)
+const state3 =cloneDeep(state)
+state.user.login= true;
+console.log(state2)
+console.log(state3)
+
+
+if(module.hot)
+{
+  module.hot.accept();
+}
+
+// parcel you can ommit the path of file because the parcel can know it 
+
