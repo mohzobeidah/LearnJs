@@ -1,7 +1,8 @@
+
 import view from './View.js';
 import icons from 'url:../../img/icons.svg';
-class SResult extends view {
-  _parentElement = document.querySelector('.results');
+class BookmarkView extends view  {
+_parentElement = document.querySelector('.bookmarks');
 
 
   
@@ -11,19 +12,18 @@ class SResult extends view {
 
     if (!id) id='';
     id = id.slice(1);
-    const y= this._data
-      .map(x => {
-  
+    
+    let x= this._data;
+   return x.map(result=>{
         return `
-
         <li class="preview">
-          <a class="preview__link ${id==x.id?'preview__link--active':''}" href="#${x.id}">
+          <a class="preview__link ${id==result.id?'preview__link--active':''}" href="#${result.id}">
             <figure class="preview__fig">
-              <img src="${x.image}" alt="Test" />
+              <img src="${result.image}" alt="Test" />
             </figure>
             <div class="preview__data">
-              <h4 class="preview__title">${x.title}</h4>
-              <p class="preview__publisher">${x.publisher}</p>
+              <h4 class="preview__title">${result.title}</h4>
+              <p class="preview__publisher">${result.publisher}</p>
               <div class="preview__user-generated">
                 <svg>
                   <use href="${icons}#icon-user"></use>
@@ -33,11 +33,10 @@ class SResult extends view {
           </a>
         </li>
       `;
-      })
-      .join(' ');
-    
-      return y;
+      
+    }).join(' ')
+   
   }
 }
 
-export default new SResult();
+export default  new BookmarkView();

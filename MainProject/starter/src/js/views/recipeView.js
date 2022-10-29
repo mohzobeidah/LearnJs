@@ -3,8 +3,7 @@ import icons from 'url:../../img/icons.svg';
 
 class RecipeView extends view {
   _parentElement = document.querySelector('.recipe');
- 
- 
+
   _generetemarkup() {
     return `<figure class="recipe__fig">
     <img src="${this._data.image}" alt="${
@@ -18,7 +17,7 @@ class RecipeView extends view {
   <div class="recipe__details">
     <div class="recipe__info">
       <svg class="recipe__info-icon">
-        <use href="src/img/icons.svg#icon-clock"></use>
+        <use href="${icons}#icon-clock"></use>
       </svg>
       <span class="recipe__info-data recipe__info-data--minutes">${
         this._data.cookingTime
@@ -27,7 +26,7 @@ class RecipeView extends view {
     </div>
     <div class="recipe__info">
       <svg class="recipe__info-icon">
-        <use href="src/img/icons.svg#icon-users"></use>
+        <use href="${icons}#icon-users"></use>
       </svg>
       <span class="recipe__info-data recipe__info-data--people">${
         this._data.servings
@@ -35,14 +34,18 @@ class RecipeView extends view {
       <span class="recipe__info-text">servings</span>
 
       <div class="recipe__info-buttons">
-        <button class="btn--tiny btn--increase-servings">
+        <button class="btn--tiny btn--increase-servings" data-update-to="${
+          this._data.servings - 1
+        }">
           <svg>
-            <use href="src/img/icons.svg#icon-minus-circle"></use>
+            <use href="${icons}#icon-minus-circle"></use>
           </svg>
         </button>
-        <button class="btn--tiny btn--increase-servings">
+        <button class="btn--tiny btn--increase-servings" data-update-to="${
+          this._data.servings + 1
+        }">
           <svg>
-            <use href="src/img/icons.svg#icon-plus-circle"></use>
+            <use href="${icons}#icon-plus-circle"></use>
           </svg>
         </button>
       </div>
@@ -53,9 +56,9 @@ class RecipeView extends view {
         <use href="${icons}.svg#icon-user"></use>
       </svg>
     </div>
-    <button class="btn--round">
+    <button class="btn--round btn--bookmark">
       <svg class="">
-        <use href="${icons}.svg#icon-bookmark-fill"></use>
+        <use href="${icons}.svg#icon-bookmark${this._data.bookmark?"-fill":""}"></use>
       </svg>
     </button>
   </div>
@@ -88,7 +91,7 @@ class RecipeView extends view {
     >
       <span>Directions</span>
       <svg class="search__icon">
-        <use href="src/img/icons.svg#icon-arrow-right"></use>
+        <use href="${icons}#icon-arrow-right"></use>
       </svg>
     </a>
   </div>`;
@@ -98,7 +101,7 @@ class RecipeView extends view {
     return `
   <li class="recipe__ingredient">
     <svg class="recipe__icon">
-      <use href="src/img/icons.svg#icon-check"></use>
+      <use href="${icons}#icon-check"></use>
     </svg>
     <div class="recipe__quantity">${ing.quantity}</div>
     <div class="recipe__description">
@@ -116,7 +119,28 @@ class RecipeView extends view {
     });
   }
 
-  
+  addHandleUpdateServings(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const btn = e.target.closest('.btn--tiny');
+      if (!btn) return;
+
+     
+      const newServing = +btn.dataset.updateTo;
+      
+   
+      if (newServing > 0) handler(newServing);
+    });
+  }
+ 
+  addHandleBookmark(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const btn = e.target.closest('.btn--bookmark');
+      console.log(btn);
+      if(!btn ) return ;
+      handler();
+    })
+  }
+
 }
 
 export default new RecipeView();

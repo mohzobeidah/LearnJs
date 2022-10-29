@@ -48,4 +48,35 @@ export default class View{
         this._parentElement.innerHTML = '';
         this._parentElement.insertAdjacentHTML( "afterbegin", markup);
       }
+      update(data) {
+        this._data = data;
+  
+        //this.renderSpinner();
+        const newMarkup = this._generetemarkup();
+        const newVirtualDOM = [
+          ...document
+            .createRange()
+            .createContextualFragment(newMarkup)
+            .querySelectorAll('*'),
+        ];
+        const curDOM = [...this._parentElement.querySelectorAll('*')];
+        newVirtualDOM.forEach((newElm, i) => {
+          let curElm = curDOM[i];
+        
+          let x = curElm?.isEqualNode(newElm);
+          //change text only
+          if (!x && curElm?.firstChild?.nodeValue.trim() !== '') {
+            curElm.textContent = newElm.textContent;
+          }
+          // change attribute
+          if (!x) {
+            [...newElm.attributes].forEach(att => {
+              curElm.setAttribute(att.name, att.value);
+            });
+          }
+        });
+     
+        // this._parentElement.innerHTML = '';
+        // this._parentElement.insertAdjacentHTML('afterbegin', markup);
+      }
 }

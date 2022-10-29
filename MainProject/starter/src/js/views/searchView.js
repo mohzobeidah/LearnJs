@@ -4,7 +4,7 @@ class SearchView  extends view{
   _parentElemnt = document.querySelector('.search');
  
   getQuer() {
-    console.log(this._parentElemnt.querySelector('.search__field').value)
+   // console.log(this._parentElemnt.querySelector('.search__field').value)
     const res= this._parentElemnt.querySelector('.search__field').value
     this._clearInput()
     return res;
@@ -17,7 +17,7 @@ class SearchView  extends view{
     this._parentElemnt
       .addEventListener('submit', function (e) {
         e.preventDefault();
-       console.log(handler);
+    //   console.log(handler);
         handler();
       });
   }
